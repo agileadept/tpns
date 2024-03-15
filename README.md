@@ -1,4 +1,3 @@
-# tpns-server-sdk/php
 ## 概述
 [腾讯移动推送](https://cloud.tencent.com/product/tpns) 是腾讯云提供的一款支持**百亿级**消息的移动App推送平台，开发者可以调用php SDK访问腾讯移动推送服务。
 
