@@ -1,0 +1,20 @@
+{
+    "name": "agileadept/tpns",
+    "description": "[腾讯移动推送](https://cloud.tencent.com/product/tpns) 是腾讯云提供的一款支持百亿级消息的移动App推送平台，开发者可以调用php SDK访问腾讯移动推送服务。",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Agileadept\\Tpns\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "agileadept"
+        }
+    ],
+    "require": {
+        "ext-json": "*",
+        "ext-curl": "*"
+    }
+}
