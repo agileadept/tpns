@@ -14,14 +14,14 @@ class Tpns
     const SHANGHAI = "api.tpns.sh.tencent.com";
 
     //audience type
-    const AUDIENCE_ALL = "all";
-    const AUDIENCE_TAG = "tag";
-    const AUDIENCE_TOKEN = "token";
-    const AUDIENCE_TOKEN_LIST = "token_list";
-    const AUDIENCE_ACCOUNT = "account";
-    const AUDIENCE_ACCOUNT_LIST = "account_list";
-    const AUDIENCE_ACCOUNT_PACKAGE = "package_account_push";
-    const AUDIENCE_TOKEN_PACKAGE = "package_token_push";
+    const AUDIENCE_ALL = "all";                             // 全量推送
+    const AUDIENCE_TAG = "tag";                             // 标签推送
+    const AUDIENCE_TOKEN = "token";                         // 单设备推送
+    const AUDIENCE_TOKEN_LIST = "token_list";               // 设备列表群推
+    const AUDIENCE_ACCOUNT = "account";                     // 单账号推送
+    const AUDIENCE_ACCOUNT_LIST = "account_list";           // 账号列表群推
+    const AUDIENCE_ACCOUNT_PACKAGE = "package_account_push";// 号码包推送
+    const AUDIENCE_TOKEN_PACKAGE = "package_token_push";    // token 文件包推送
 
     // tag operation type
     const TAG_OPERATOR_AND = "AND";
@@ -33,12 +33,12 @@ class Tpns
     const PLATFORM_IOS = "ios";
 
     // message type
-    const MESSAGE_NOTIFY = "notify";
-    const MESSAGE_MESSAGE = "message";
+    const MESSAGE_NOTIFY = "notify";                        // 通知
+    const MESSAGE_MESSAGE = "message";                      // 透传消息/静默消息
 
     // environment type
-    const ENVIRONMENT_PROD = "product";
-    const ENVIRONMENT_DEV = "dev";
+    const ENVIRONMENT_PROD = "product";                     // 推送生产环境
+    const ENVIRONMENT_DEV = "dev";                          // 推送开发环境
 
     // set audience type: AUDIENCE_ALL, AUDIENCE_TAG, AUDIENCE_TOKEN, AUDIENCE_TOKEN_LIST, AUDIENCE_ACCOUNT, AUDIENCE_ACCOUNT_LIST, AUDIENCE_ACCOUNT_PACKAGE, AUDIENCE_TOKEN_PACKAGE
     function WithAudienceType($type)

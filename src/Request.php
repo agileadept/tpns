@@ -8,41 +8,43 @@ namespace Agileadept\Tpns;
  */
 class Request
 {
-    public $audience_type = "";
+    public $audience_type = "";// 推送目标
     public $platform = "";
     /**
      * @var Message
      */
-    public $message;
-    public $message_type = "";
+    public $message;          // 消息体，请参见 消息体类型
+    public $message_type = "";// 消息类型：notify：通知;message：透传消息/静默消息
+
     /**
      * @var TagRule[]
      */
-    public $tag_rules;
-    public $token_list;  // array of string
-    public $account_list;// array of string
+    public $tag_rules;                // 签组合推送，可设置'与'、'或'、'非'组合规则，注意：当与 tag_list 二者共存时，tag_list 字段自动无效，参数说明请查看 tag_rules 参数说明
+    public $token_list;               // array of string，若单设备推送：要求 audience_type=token参数格式：[ "token1" ]若设备列表推送：参数格式：[ "token1","token2" ]，最多1000个 token
+    public $account_list;             // array of string，若单账号推送：要求 audience_type = account参数格式：[ "account1" ]若账号列表推送：参数格式：["account1","account2"]，最多1000 个 account
+    public $environment = "";         // 用户指定推送环境，仅限 iOS 平台推送使用：product： 推送生产环境dev： 推送开发环境，注册打包的环境与推送环境需要保存一致，请参见 推送环境选择说明
+    public $upload_id = 0;            // 号码包或 token 包的上传 ID
+    public $expire_time = 259200;     // 消息离线存储时间（单位为秒），最长72小时，若 expire_time = 0，则表示实时消息；若 expire_time 大于0，且小于800s，则系统会重置为800s；若expire_time >= 800s，按实际设置时间存储，最长72小时设置的最大值不得超过259200，否则会导致推送失败，如需调整离线消息时间，请联系 在线客服 申请
+    public $send_time = "";           // 定时推送任务，指定推送时间，可选择未来90天内的时间：格式为 yyyy-MM-DD HH:MM:SS；若小于服务器当前时间，则会立即推送；仅全量推送、号码包推送和标签推送支持此字段
+    public $multi_pkg = false;        // 多包名推送：当 App 存在多个渠道包（例如应用宝、豌豆荚等），并期望推送时所有渠道的 App 都能收到消息，可将该值设置为 true。注意：该参数默认控制移动推送自建通道的多包名推送，需要实现厂商通道多包名推送详见 厂商通道多包名配置 文档
+    public $plan_id = "";             // 推送计划 ID，推送计划创建及使用方式可 参考文档
+    public $account_push_type = 0;    // 0：往账号的最新的 device 上推送信息；1：往账号关联的所有 device 设备上推送信息
+    public $account_type = 0;         // 账号类型，需要与推送的账号所属类型一致，取值可参考 账号类型取值表
+    public $collapse_id = 0;          // 消息覆盖参数，在前一条推送任务已经调度下发后，如果第二条推送任务携带相同的 collapse_id  则会停止前一条推送中尚未下发的移动推送自建通道数据，同时会覆盖展示第一条推送任务的消息。已完成任务的 collapse_id 可以通过 单个任务推送信息查询接口 获取。目前仅支持全推、标签推送、号码包推送。
+    public $push_speed = 0;           // 推送限速设置每秒 X 条，X 取值参数范围1000 - 50000；仅全量推送、号码包推送和标签推送有效
+    public $tpns_online_push_type = 0;// 在线设备是否通过移动推送自建通道下发：0：默认在线走移动推送自建通道下发；1：在线不优先走移动推送自建通道下发
+    public $ignore_invalid_token = 0; // 0：代表如果有无效的token则这个接口调用失败；1：代表忽略无效的token继续进行下发；注意：仅对 token 列表推送和单 token 推送有效
+    public $force_collapse = false;   // 对于不支持消息覆盖的 OPPO 、vivo 通道的设备，是否进行消息下发。false：不下发消息；true：下发消息
 
-    public $environment = "";
-    public $upload_id = 0;
-    public $expire_time = 259200;
-    public $send_time = "";
-    public $multi_pkg = false;
-    public $plan_id = "";
-    public $account_push_type = 0;
-    public $account_type = 0;
-    public $collapse_id = 0;
-    public $push_speed = 0;
-    public $tpns_online_push_type = 0;
-    public $ignore_invalid_token = 0;
-    public $force_collapse = false;
     /**
      * @var ChannelRule[]
      */
-    public $channel_rules;
+    public $channel_rules;// 推送通道选择策略。可自定义该条推送允许通过哪些通道下发，默认允许通过所有通道下发，详细推送策略参考 通道策略，channel_rules  数组单元素数据结构见下 channel_rules 参数说明
+
     /**
      * @var LoopParam
      */
-    public $loop_param;
+    public $loop_param;// 仅全量推送、号码包推送和标签推送支持此字段，详情见下文 loop_param 参数说明
 
     public function filter()
     {
